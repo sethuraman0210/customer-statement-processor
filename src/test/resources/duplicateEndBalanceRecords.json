@@ -1,0 +1,26 @@
+[
+  {
+    "Reference": 194261,
+    "AccountNumber": "NL91RABO0315273637",
+    "Description": "Clothes from Jan Bakker",
+    "Start Balance": 21.6,
+    "Mutation": -41.83,
+    "End Balance": -20.26
+  },
+  {
+    "Reference": 112806,
+    "AccountNumber": "NL27SNSB0917829871",
+    "Description": "Clothes for Willem Dekker",
+    "Start Balance": 91.23,
+    "Mutation": "+15.57",
+    "End Balance": 106.8
+  },
+  {
+    "Reference": 112806,
+    "AccountNumber": "NL69ABNA0433647324",
+    "Description": "Clothes for Richard de Vries",
+    "Start Balance": 90.83,
+    "Mutation": -10.91,
+    "End Balance": 79.92
+  }
+]
