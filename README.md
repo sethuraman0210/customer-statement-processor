@@ -7,11 +7,11 @@ Implement a REST service which receives the customer statement JSON as a POST da
   2. The end balance needs to be validated ( Start Balance +/- Mutation = End Balance )
 
 ### Application StartUp
-   #####IDE
+   #### IDE
  * Import the project in your favourite IDE
  * Run the file `src/main/java/com/rabobank/statementprocessor/Application.java`
  
-  #####Command Line
+  #### Command Line
  * Clone this repository
  * Run `mvn clean package`
  * Run `mvn spring-boot:run`
@@ -24,7 +24,7 @@ Implement a REST service which receives the customer statement JSON as a POST da
 
     http://localhost:8088/customer/statement/processor
 
-##Coding 
+## Coding 
  * API developed using S.O.L.I.D Coding Principles
  * JUnit and Integration Test cases has be written with overall code coverage of 95%
  * Lombok plugin is used to avoid boilerplate coding
