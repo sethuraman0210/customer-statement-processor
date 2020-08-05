@@ -36,7 +36,7 @@ public class StatementProcessContollerTest {
 
     @Test
     @Order(value = 1)
-    @DisplayName("Test successful records scenario")
+    @DisplayName("Test successful scenario")
     public void testSuccessFulRecords() throws URISyntaxException {
         final String baseUrl = "http://localhost:" + randomServerPort + "/customer/statement/processor";
         URI uri = new URI(baseUrl);
@@ -55,11 +55,11 @@ public class StatementProcessContollerTest {
 
     @Test
     @Order(value = 2)
-    @DisplayName("Test Duplicate record scenario")
+    @DisplayName("Test Duplicate reference scenario")
     public void testDuplicateRecords() throws URISyntaxException {
         final String baseUrl = "http://localhost:" + randomServerPort + "/customer/statement/processor";
         URI uri = new URI(baseUrl);
-        List<RecordDTO> recordDTOS = readJson("duplicateRecords.json");
+        List<RecordDTO> recordDTOS = readJson("duplicateReference.json");
         HttpHeaders headers = new HttpHeaders();
 
 
@@ -74,12 +74,12 @@ public class StatementProcessContollerTest {
 
     @Test
     @Order(value = 3)
-    @DisplayName("Test EndBalance error record scenario")
+    @DisplayName("Test Incorrect EndBalance scenario")
     public void testEndBalanceErrorRecords() throws URISyntaxException {
         final String baseUrl = "http://localhost:" + randomServerPort + "/customer/statement/processor";
         URI uri = new URI(baseUrl);
 
-        List<RecordDTO> recordDTOS = readJson("endBalanceErrorRecords.json");
+        List<RecordDTO> recordDTOS = readJson("inCorrectEndBalance.json");
 
         HttpEntity<List> request = new HttpEntity<>(recordDTOS, null);
 
@@ -92,12 +92,12 @@ public class StatementProcessContollerTest {
 
     @Test
     @Order(value = 4)
-    @DisplayName("Test Duplicate & EndBalance error record scenario")
+    @DisplayName("Test Duplicate reference & Incorrect EndBalance scenario")
     public void testDuplicateEndBalanceErrorRecords() throws URISyntaxException {
         final String baseUrl = "http://localhost:" + randomServerPort + "/customer/statement/processor";
         URI uri = new URI(baseUrl);
 
-        List<RecordDTO> recordDTOS = readJson("duplicateEndBalanceRecords.json");
+        List<RecordDTO> recordDTOS = readJson("duplicateReference_InCorrectEndBalance.json");
 
         HttpEntity<List> request = new HttpEntity<>(recordDTOS, null);
 

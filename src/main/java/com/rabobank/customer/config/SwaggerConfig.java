@@ -25,7 +25,7 @@ public class SwaggerConfig {
     @Bean
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false)
-                .select().apis(RequestHandlerSelectors.basePackage("com.rabo.customer.controller"))
+                .select().apis(RequestHandlerSelectors.basePackage("com.rabobank.customer.controller"))
                 .build();
     }
 }

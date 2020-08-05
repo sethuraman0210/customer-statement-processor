@@ -38,18 +38,18 @@ public class RecordsBusinessValidator {
         log.info("Inside :: RecordsBusinessValidator :: validate :: validation of records");
 
         Set<ErrorRecordDTO> errorRecordset = new HashSet<>();
-        boolean isRecordsDuplicate = false;
-        boolean isEndBalanceError = false;
+        boolean isDuplicateReference = false;
+        boolean isInCorrectEndBalance = false;
 
         for (RecordDTO record : records) {
             boolean isErrorRecord = false;
-            if (checkDuplicate(records, record)) {
+            if (checkDuplicateReference(records, record)) {
                 isErrorRecord = true;
-                isRecordsDuplicate = true;
+                isDuplicateReference = true;
             }
-            if (!checkEndBalanceCorrect(record)) {
+            if (checkInCorrectEndBalance(record)) {
                 isErrorRecord = true;
-                isEndBalanceError = true;
+                isInCorrectEndBalance = true;
             }
             if (isErrorRecord) {
                 ErrorRecordDTO errorRecord = new ErrorRecordDTO();
@@ -58,10 +58,10 @@ public class RecordsBusinessValidator {
                 errorRecordset.add(errorRecord);
             }
         }
-        log.info("RecordsBusinessValidator :: validate :: isRecordsDuplicate :: {} :: isEndBalanceError :: {}"
-                , isRecordsDuplicate, isEndBalanceError);
+        log.info("RecordsBusinessValidator :: validate :: isDuplicateReference :: {} :: isInCorrectEndBalance :: {}"
+                , isDuplicateReference, isInCorrectEndBalance);
 
-        return getProcessorResponseDTO(errorRecordset, isRecordsDuplicate, isEndBalanceError);
+        return getProcessorResponseDTO(errorRecordset, isDuplicateReference, isInCorrectEndBalance);
     }
 
     /**
@@ -70,11 +70,11 @@ public class RecordsBusinessValidator {
      * @param record
      * @return boolean
      */
-    private static boolean checkEndBalanceCorrect(RecordDTO record) {
+    private static boolean checkInCorrectEndBalance(RecordDTO record) {
 
-        log.info("Inside :: RecordsBusinessValidator :: checkEndBalanceCorrect :: validation of endBalance");
+        log.info("Inside :: RecordsBusinessValidator :: checkInCorrectEndBalance :: validation of endBalance");
 
-        return (record.getStartBalance().add(record.getMutation())).stripTrailingZeros().equals(record.getEndBalance().stripTrailingZeros());
+        return !(record.getStartBalance().add(record.getMutation())).stripTrailingZeros().equals(record.getEndBalance().stripTrailingZeros());
     }
 
     /**
@@ -84,9 +84,9 @@ public class RecordsBusinessValidator {
      * @param record  record to be validate
      * @return boolean status
      */
-    private static boolean checkDuplicate(List<RecordDTO> records, RecordDTO record) {
+    private static boolean checkDuplicateReference(List<RecordDTO> records, RecordDTO record) {
 
-        log.info("Inside :: RecordsBusinessValidator :: checkEndBalanceCorrect :: validation of duplicate records");
+        log.info("Inside :: RecordsBusinessValidator :: checkDuplicateReference :: validation of duplicate records");
 
         return Collections.frequency(records, record) > 1;
     }
@@ -102,7 +102,7 @@ public class RecordsBusinessValidator {
      */
     private static ValidationResponseDTO getProcessorResponseDTO(Set<ErrorRecordDTO> errorRecordSet, boolean isRecordsDuplicate, boolean recordsBalanceError) {
 
-        log.info("Start :: RecordsBusinessValidator :: getProcessorResponseDTO :: validation of duplicate records");
+        log.info("Start :: RecordsBusinessValidator :: getProcessorResponseDTO :: Set final result for statement process");
 
         ValidationResponseDTO responseDTO = new ValidationResponseDTO();
 
@@ -116,7 +116,7 @@ public class RecordsBusinessValidator {
             responseDTO.setResult(Constants.SUCCESSFUL);
         }
         responseDTO.setErrorRecords(errorRecordSet);
-        log.info("End :: RecordsBusinessValidator :: getProcessorResponseDTO :: validation of duplicate records");
+        log.info("End :: RecordsBusinessValidator :: getProcessorResponseDTO :: final result :: {}", responseDTO.getResult());
 
         return responseDTO;
     }
