@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(exclude = {"accountNumber", "description", "startBalance", "mutation", "endBalance"})
-public class RecordDTO {
+public final class RecordDTO {
 
     /**
      * Field holds the reference id of the statement

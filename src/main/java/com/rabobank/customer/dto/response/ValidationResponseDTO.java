@@ -17,7 +17,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @ToString
-public class ValidationResponseDTO {
+public final class ValidationResponseDTO {
 
     /**
      * Result represents the final status of the statement processing

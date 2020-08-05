@@ -52,9 +52,7 @@ public class RecordsBusinessValidator {
                 isInCorrectEndBalance = true;
             }
             if (isErrorRecord) {
-                ErrorRecordDTO errorRecord = new ErrorRecordDTO();
-                errorRecord.setReference(record.getReference());
-                errorRecord.setAccountNumber(record.getAccountNumber());
+                ErrorRecordDTO errorRecord = new ErrorRecordDTO(record.getReference(),record.getAccountNumber());
                 errorRecordset.add(errorRecord);
             }
         }
