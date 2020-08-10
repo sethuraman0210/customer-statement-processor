@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * RecordsBusinessValidator performs all the business validations on the request and
@@ -38,28 +39,31 @@ public class RecordsBusinessValidator {
         log.info("Inside :: RecordsBusinessValidator :: validate :: validation of records");
 
         Set<ErrorRecordDTO> errorRecordset = new HashSet<>();
-        boolean isDuplicateReference = false;
-        boolean isInCorrectEndBalance = false;
+        AtomicBoolean isDuplicateReference = new AtomicBoolean(false);
+        AtomicBoolean isInCorrectEndBalance = new AtomicBoolean(false);
 
-        for (RecordDTO record : records) {
+        records.stream().forEach(record -> {
+            log.info("RecordsBusinessValidator :: validate :: record :: {}", record.toString());
             boolean isErrorRecord = false;
             if (checkDuplicateReference(records, record)) {
                 isErrorRecord = true;
-                isDuplicateReference = true;
+                isDuplicateReference.set(true);
+                log.info("RecordsBusinessValidator :: validate :: recordDuplicate :: {}", true);
             }
             if (checkInCorrectEndBalance(record)) {
                 isErrorRecord = true;
-                isInCorrectEndBalance = true;
+                isInCorrectEndBalance.set(true);
+                log.info("RecordsBusinessValidator :: validate :: recordInCorrectEndBalance :: {}", true);
             }
             if (isErrorRecord) {
-                ErrorRecordDTO errorRecord = new ErrorRecordDTO(record.getReference(),record.getAccountNumber());
+                ErrorRecordDTO errorRecord = new ErrorRecordDTO(record.getReference(), record.getAccountNumber());
                 errorRecordset.add(errorRecord);
             }
-        }
+        });
         log.info("RecordsBusinessValidator :: validate :: isDuplicateReference :: {} :: isInCorrectEndBalance :: {}"
                 , isDuplicateReference, isInCorrectEndBalance);
 
-        return getProcessorResponseDTO(errorRecordset, isDuplicateReference, isInCorrectEndBalance);
+        return getProcessorResponseDTO(errorRecordset, isDuplicateReference.get(), isInCorrectEndBalance.get());
     }
 
     /**
@@ -69,8 +73,6 @@ public class RecordsBusinessValidator {
      * @return boolean
      */
     private static boolean checkInCorrectEndBalance(RecordDTO record) {
-
-        log.info("Inside :: RecordsBusinessValidator :: checkInCorrectEndBalance :: validation of endBalance");
 
         return !(record.getStartBalance().add(record.getMutation())).stripTrailingZeros().equals(record.getEndBalance().stripTrailingZeros());
     }
@@ -83,8 +85,6 @@ public class RecordsBusinessValidator {
      * @return boolean status
      */
     private static boolean checkDuplicateReference(List<RecordDTO> records, RecordDTO record) {
-
-        log.info("Inside :: RecordsBusinessValidator :: checkDuplicateReference :: validation of duplicate records");
 
         return Collections.frequency(records, record) > 1;
     }

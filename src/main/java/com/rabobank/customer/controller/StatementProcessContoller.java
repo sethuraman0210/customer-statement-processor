@@ -2,6 +2,7 @@ package com.rabobank.customer.controller;
 
 import com.rabobank.customer.dto.request.RecordDTO;
 import com.rabobank.customer.dto.response.ValidationResponseDTO;
+import com.rabobank.customer.exception.StatementValidationException;
 import com.rabobank.customer.service.StatementProcessService;
 import com.rabobank.customer.validator.RequestValidator;
 import io.swagger.annotations.ApiOperation;
@@ -54,7 +55,7 @@ public class StatementProcessContoller {
      * @param records
      * @param bindingResult
      * @return ResponseEntity<ValidationResponseDTO>
-     * @throws BindException
+     * @throws StatementValidationException
      */
 
     @ApiOperation(value = "Customer statement records validaiton", notes = "", response = Void.class,
@@ -67,14 +68,14 @@ public class StatementProcessContoller {
     ResponseEntity<ValidationResponseDTO> processStatementValidation(
             @ApiParam(value = "Monthly deliveries of customer statement records.", required = true)
             @Validated @RequestBody List<RecordDTO> records,
-            BindingResult bindingResult) throws BindException {
+            BindingResult bindingResult) throws StatementValidationException {
 
         log.info("Request recieved for processing the Customer statement :: {}", records);
 
         recordsValidator.validate(records, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            throw new BindException(bindingResult);
+            throw new StatementValidationException();
         } else {
 
             ValidationResponseDTO responseDTO = statementProcessService.processStatementRecords(records);

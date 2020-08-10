@@ -19,4 +19,5 @@ public final class Constants {
     public static String INCORRECT_END_BALANCE = "INCORRECT_END_BALANCE";
     public static String DUPLICATE_REFERENCE_INCORRECT_END_BALANCE = "DUPLICATE_REFERENCE_INCORRECT_END_BALANCE";
     public static String BAD_REQUEST = "BAD_REQUEST";
+    public static String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
 }

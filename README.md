@@ -58,5 +58,6 @@ Implement a REST service which receives the customer statement JSON as a POST da
  * Lombok plugin has been used to avoid boilerplate code
  * Null check is being done in record level for { "Reference", "AccountNumber", "Start Balance", "Mutation", "End Balance" }
    as they are required fields to run the business validation.
+ * AtomicBoolean.class from Java Concurrency package which is thread safe is used to access not final variable inside Lambda expression.   
  * Custom Validator has been implemented to Validate the Request object.
  

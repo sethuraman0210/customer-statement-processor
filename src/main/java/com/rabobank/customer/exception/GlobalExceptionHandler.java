@@ -25,16 +25,31 @@ public class GlobalExceptionHandler {
     private final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
-     * Method handles all the unhandled exceptions
+     * Method handles all the StatementValidationException exceptions
      *
-     * @param exception
+     * @param statementValidationException
      * @return ValidationResponseDTO
      */
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    ResponseEntity<ValidationResponseDTO> handleException(Exception exception) {
-        log.debug("Exception Handling for all unhandled Exception");
+    ResponseEntity<ValidationResponseDTO> handleException(StatementValidationException statementValidationException) {
+        log.debug("Exception Handling for all StatementValidationException");
         return new ResponseEntity<>(new ValidationResponseDTO(Constants.BAD_REQUEST), HttpStatus.BAD_REQUEST);
     }
+
+    /**
+     * Method handles all the ValidationException exceptions
+     *
+     * @param exception
+     * @return Error
+     */
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    ResponseEntity<ValidationResponseDTO> handleException(Exception exception) {
+        log.debug("Exception Handling for all UnHandled Exception");
+        return new ResponseEntity<>(new ValidationResponseDTO(Constants.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
