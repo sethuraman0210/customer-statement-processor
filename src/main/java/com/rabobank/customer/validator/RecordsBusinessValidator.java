@@ -38,7 +38,7 @@ public class RecordsBusinessValidator {
 
         log.info("Inside :: RecordsBusinessValidator :: validate :: validation of records");
 
-        Set<ErrorRecordDTO> errorRecordset = new HashSet<>();
+        Set<ErrorRecordDTO> errorRecordSet = new HashSet<>();
         AtomicBoolean isDuplicateReference = new AtomicBoolean(false);
         AtomicBoolean isInCorrectEndBalance = new AtomicBoolean(false);
 
@@ -57,13 +57,13 @@ public class RecordsBusinessValidator {
             }
             if (isErrorRecord) {
                 ErrorRecordDTO errorRecord = new ErrorRecordDTO(record.getReference(), record.getAccountNumber());
-                errorRecordset.add(errorRecord);
+                errorRecordSet.add(errorRecord);
             }
         });
         log.info("RecordsBusinessValidator :: validate :: isDuplicateReference :: {} :: isInCorrectEndBalance :: {}"
                 , isDuplicateReference, isInCorrectEndBalance);
 
-        return getProcessorResponseDTO(errorRecordset, isDuplicateReference.get(), isInCorrectEndBalance.get());
+        return getProcessorResponseDTO(errorRecordSet, isDuplicateReference.get(), isInCorrectEndBalance.get());
     }
 
     /**
