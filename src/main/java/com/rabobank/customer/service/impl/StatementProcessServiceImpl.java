@@ -26,12 +26,14 @@ public class StatementProcessServiceImpl implements StatementProcessService {
 
     /**
      * processStatementRecords method is responsible for routing the records to the validator generating confilct scenario
-     *
      * @param records
      * @return ValidationResponseDTO
      */
     @Override
     public ValidationResponseDTO processStatementRecords(List<RecordDTO> records) {
+
+
+
         return recordsBusinessValidator.validate(records);
     }
 
