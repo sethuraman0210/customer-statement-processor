@@ -1,10 +1,5 @@
 package com.rabobank.customer.controller;
 
-
-
-
-
-
 import com.rabobank.customer.dto.request.RecordDTO;
 import com.rabobank.customer.dto.response.ValidationResponseDTO;
 import com.rabobank.customer.exception.StatementValidationException;
