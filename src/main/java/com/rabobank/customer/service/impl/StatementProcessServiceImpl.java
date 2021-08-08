@@ -34,4 +34,6 @@ public class StatementProcessServiceImpl implements StatementProcessService {
     public ValidationResponseDTO processStatementRecords(List<RecordDTO> records) {
         return recordsBusinessValidator.validate(records);
     }
+
+
 }
