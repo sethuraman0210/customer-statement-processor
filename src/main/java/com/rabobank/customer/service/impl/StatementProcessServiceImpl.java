@@ -25,7 +25,7 @@ public class StatementProcessServiceImpl implements StatementProcessService {
     RecordsBusinessValidator recordsBusinessValidator;
 
     /**
-     * processStatementRecords method is responsible for routing the records to the validator
+     * processStatementRecords method is responsible for routing the records to the validator generating confilct scenario
      *
      * @param records
      * @return ValidationResponseDTO
