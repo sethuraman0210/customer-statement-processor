@@ -32,6 +32,9 @@ public class StatementProcessServiceImpl implements StatementProcessService {
      */
     @Override
     public ValidationResponseDTO processStatementRecords(List<RecordDTO> records) {
+
+
+
         return recordsBusinessValidator.validate(records);
     }
 
